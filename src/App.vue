@@ -1,32 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  font-weight: 400;
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-ExtraBold.ttf");
+  font-weight: 800;
+  font-style: normal;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-ExtraBoldItalic.ttf");
+  font-weight: 800;
+  font-style: italic;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-SemiBold.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-SemiBoldItalic.ttf");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-ExtraLight.ttf");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url("assets/fonts/Montserrat-ExtraLightItalic.ttf");
+  font-weight: 200;
+  font-style: italic;
 }
 </style>
