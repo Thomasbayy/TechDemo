@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <div class="built-with-button" @click="showModal">What's this built with?</div>
+    <modal v-model="modalShowing"></modal>
     <div class="greeting">Welcome to yet another portfolio</div>
     <div class="choose-demo">Choose a demo</div>
     <div class="demo-box">
@@ -33,16 +35,21 @@
 import VuejsIcon from 'vue-material-design-icons/Vuejs.vue';
 import FirebaseIcon from 'vue-material-design-icons/Firebase.vue';
 
+// components
+import Modal from '@/components/Modal.vue';
+
 export default {
   name: 'Home',
   components: {
     VuejsIcon,
     FirebaseIcon,
+    Modal,
   },
   data() {
     return {
       showDemo: [],
       showTech: false,
+      modalShowing: false,
       allTech: [
         {
           name: 'Vue',
@@ -96,10 +103,40 @@ export default {
       fadeInWait += 100;
     }
   },
+  methods: {
+    showModal() {
+      console.log('x');
+      this.modalShowing = true;
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
+
+  //TODO Add variables for colors
+
+  .built-with-button {
+    position: absolute;
+    padding: 12px;
+    color: #41B883;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #41B883;
+      color: #fff;
+      -webkit-box-shadow: inset -4px -4px 10px 2px rgba(51,138,99,1);
+      -moz-box-shadow: inset -4px -4px 10px 2px rgba(51,138,99,1);
+      box-shadow: inset -4px -4px 10px 2px rgba(51,138,99,1);
+    }
+  }
+
+  .home {
+    overflow: auto;
+    min-height: 100vh;
+  }
+
   .greeting {
     color: #41B883;
     font-size: 30px;

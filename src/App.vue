@@ -6,12 +6,17 @@
 
 <style lang="scss">
 
+body {
+  margin: 0px;
+}
+
 #app {
   font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
   color: #2c3e50;
+  min-height: 100vh;
 }
 
 @font-face {
