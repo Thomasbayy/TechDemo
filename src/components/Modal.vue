@@ -1,7 +1,8 @@
 <template>
   <transition v-if="value" name="fade">
-    <div class="modal-backdrop">
+    <div class="modal-backdrop" @click="closeIfEverywhere">
       <CloseIcon class="modal-close" @click="close"></CloseIcon>
+      <slot></slot>
     </div>
   </transition>
 </template>
@@ -21,10 +22,20 @@ export default {
       type: Boolean,
       required: true,
     },
+    closeEverywhere: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
   },
   methods: {
     close() {
       this.$emit('input', false);
+    },
+    closeIfEverywhere() {
+      if (this.closeEverywhere) {
+        this.close();
+      }
     },
   },
 };
@@ -35,7 +46,7 @@ export default {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.85);
     z-index: 1;
     display: flex;
     justify-content: center;

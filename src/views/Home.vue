@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <div class="built-with-button" @click="showModal">What's this built with?</div>
-    <modal v-model="modalShowing"></modal>
+    <a href="https://github.com/Thomasbayy" class="hello-there"><github-icon :size="20"/> Thomasbayy</a>
+    <built-with-modal v-model="modalShowing"/>
     <div class="greeting">Welcome to yet another portfolio</div>
     <div class="choose-demo">Choose a demo</div>
     <div class="demo-box">
@@ -22,7 +23,7 @@
     <div class="tech-title" v-if="showTech">Techs</div>
     <div class="tech-box" v-if="showTech">
       <div class="tech-item" v-for="item in hoveredTech" :key="item.name">
-        <component class="tech-icon" :is="item.icon"></component>
+        <component class="tech-icon" :is="item.icon" :size="30"></component>
         <div>{{ item.name }}</div>
       </div>
     </div>
@@ -34,16 +35,18 @@
 // icons
 import VuejsIcon from 'vue-material-design-icons/Vuejs.vue';
 import FirebaseIcon from 'vue-material-design-icons/Firebase.vue';
+import GithubIcon from 'vue-material-design-icons/Github.vue';
 
 // components
-import Modal from '@/components/Modal.vue';
+import BuiltWithModal from '@/components/BuiltWithModal.vue';
 
 export default {
   name: 'Home',
   components: {
     VuejsIcon,
     FirebaseIcon,
-    Modal,
+    BuiltWithModal,
+    GithubIcon,
   },
   data() {
     return {
@@ -105,7 +108,6 @@ export default {
   },
   methods: {
     showModal() {
-      console.log('x');
       this.modalShowing = true;
     },
   },
@@ -145,6 +147,30 @@ export default {
     animation: slideDown 0.5s ease-in forwards;
   }
 
+  .hello-there {
+    color: #2c3e50;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+
+    span {
+      margin-right: 4px;
+    }
+
+    &:hover {
+      background-color: #191919;
+      color: #fff;
+    }
+  }
+
   .choose-demo {
     font-size: 18px;
     text-align: center;
@@ -166,7 +192,8 @@ export default {
   }
 
   .tech-title {
-    color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 14px;
     text-align: center;
     margin-top: 30px;
   }
@@ -178,12 +205,6 @@ export default {
     align-items: center;
     padding: 0px 10px;
     min-width: 80px;
-
-    span {
-      // Overrides material icon size, can not be done through component prop
-      font-size: 30px !important;
-      margin-bottom: 4px;
-    }
 
     &:not(:last-child) {
       border-right: 1px solid rgba(65, 184, 131, 0.4);
