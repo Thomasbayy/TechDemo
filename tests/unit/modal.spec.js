@@ -7,7 +7,7 @@ describe('Modal', () => {
     wrapper = mount(Modal, {
       propsData: {
         value: true,
-        closeEveywhere: false,
+        closeEverywhere: false,
       },
     });
   });
@@ -22,23 +22,9 @@ describe('Modal', () => {
     expect(wrapper.find('[data-testid="backdrop"]').element).toBeTruthy();
   });
 
-  it('should call the close method, when close button is clicked', () => {
-    const spy = jest.fn();
-    wrapper = mount(Modal, {
-      propsData: {
-        value: true,
-      },
-      methods: {
-        close: spy,
-      },
-    });
+  it('should emit input false, when close button is clicked', () => {
     const button = wrapper.find('[data-testid="close-button"]');
     button.trigger('click');
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should emit input with false value, when close is called', () => {
-    wrapper.vm.close();
     expect(wrapper.emitted().input.length).toBe(1);
   });
 
