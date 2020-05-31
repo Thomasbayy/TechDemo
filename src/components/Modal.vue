@@ -1,7 +1,7 @@
 <template>
   <transition v-if="value" name="fade">
-    <div class="modal-backdrop" @click="closeIfEverywhere">
-      <CloseIcon class="modal-close" @click="close"></CloseIcon>
+    <div class="modal-backdrop" data-testid="backdrop" @click="closeIfEverywhere">
+      <CloseIcon class="modal-close" data-testid="close-button" @click="close"></CloseIcon>
       <slot></slot>
     </div>
   </transition>

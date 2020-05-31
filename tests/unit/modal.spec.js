@@ -1,0 +1,77 @@
+import { mount } from '@vue/test-utils';
+import Modal from '@/components/Modal.vue';
+
+describe('Modal', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(Modal, {
+      propsData: {
+        value: true,
+        closeEveywhere: false,
+      },
+    });
+  });
+
+  it('should be hidden when value prop is false', async () => {
+    wrapper.setProps({ value: false });
+    await wrapper.vm.$nextTick();
+    expect(wrapper.find('[data-testid="backdrop"]').element).toBe(undefined);
+  });
+
+  it('should be shown if value prop is true', () => {
+    expect(wrapper.find('[data-testid="backdrop"]').element).toBeTruthy();
+  });
+
+  it('should call the close method, when close button is clicked', () => {
+    const spy = jest.fn();
+    wrapper = mount(Modal, {
+      propsData: {
+        value: true,
+      },
+      methods: {
+        close: spy,
+      },
+    });
+    const button = wrapper.find('[data-testid="close-button"]');
+    button.trigger('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should emit input with false value, when close is called', () => {
+    wrapper.vm.close();
+    expect(wrapper.emitted().input.length).toBe(1);
+  });
+
+  it('clicking backdrop should call closeIfEverywhere', async () => {
+    const spy = jest.fn();
+    wrapper = mount(Modal, {
+      propsData: {
+        value: true,
+      },
+      methods: {
+        closeIfEverywhere: spy,
+      },
+    });
+    const backdrop = wrapper.find('[data-testid="backdrop"]');
+    await backdrop.trigger('click');
+
+    expect(spy).toBeCalled();
+  });
+
+  it('closeIfEverywhere should not call close, if closeEverywhere is false', () => {
+    const spy = jest.spyOn(wrapper.vm, 'close');
+
+    wrapper.vm.closeIfEverywhere();
+    expect(spy).toBeCalledTimes(0);
+  });
+
+  it('closeIfEverywhere should call close, if closeEverywhere is true', () => {
+    wrapper.setProps({
+      closeEverywhere: true,
+    });
+    const spy = jest.spyOn(wrapper.vm, 'close');
+
+    wrapper.find('[data-testid="backdrop"]').trigger('click');
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+});
