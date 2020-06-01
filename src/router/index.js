@@ -10,6 +10,11 @@ const routes = [
     name: 'Home',
     component: Home,
   },
+  {
+    path: '/form-builder',
+    name: 'form-builder',
+    component: () => import('@/views/FormBuilder.vue'),
+  },
 ];
 
 const router = new VueRouter({

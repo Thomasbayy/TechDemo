@@ -1,5 +1,5 @@
 <template>
-  <modal :value="value" @input="toggleModal" close-everywhere>
+  <modal :value="value" data-testid="modal" @input="toggleModal" close-everywhere>
     <div class="content">
       <div class="item">
         <div class="item-headline">Javascript</div>

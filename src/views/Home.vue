@@ -1,23 +1,45 @@
 <template>
   <div class="home">
-    <div class="built-with-button" @click="showModal">What's this built with?</div>
+    <div class="built-with-button" data-testid="show-modal-button" @click="showModal">
+      What's this built with?
+    </div>
     <a href="https://github.com/Thomasbayy" class="hello-there"><github-icon :size="20"/> Thomasbayy</a>
-    <built-with-modal v-model="modalShowing"/>
+    <built-with-modal data-testid="built-with-modal" v-model="modalShowing"/>
     <div class="greeting">Welcome to yet another portfolio</div>
     <div class="choose-demo">Choose a demo</div>
     <div class="demo-box">
-      <div class="demo-item-wrapper" @mouseenter="showTech = 1" @mouseleave="showTech = false">
+      <router-link
+        class="demo-item-wrapper"
+        @mouseenter="showTech = 1"
+        @mouseleave="showTech = false"
+        :to="{ name: 'form-builder' }"
+      >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[0] }">Form builder</div>
-      </div>
-      <div class="demo-item-wrapper" @mouseenter="showTech = 2" @mouseleave="showTech = false">
+      </router-link>
+      <router-link
+        class="demo-item-wrapper"
+        @mouseenter="showTech = 2"
+        @mouseleave="showTech = false"
+        :to="{ name: 'form-builder' }"
+      >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[1] }">Hey 2</div>
-      </div>
-      <div class="demo-item-wrapper" @mouseenter="showTech = 3" @mouseleave="showTech = false">
+      </router-link>
+      <router-link
+        class="demo-item-wrapper"
+        @mouseenter="showTech = 3"
+        @mouseleave="showTech = false"
+        :to="{ name: 'form-builder' }"
+      >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[2] }">Hey 3</div>
-      </div>
-      <div class="demo-item-wrapper" @mouseenter="showTech = 4" @mouseleave="showTech = false">
+      </router-link>
+      <router-link
+        class="demo-item-wrapper"
+        @mouseenter="showTech = 4"
+        @mouseleave="showTech = false"
+        :to="{ name: 'form-builder' }"
+      >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[3] }">Hey 4</div>
-      </div>
+      </router-link>
     </div>
 
     <div class="tech-title" v-if="showTech">Techs</div>
@@ -66,6 +88,10 @@ export default {
           name: 'Firebase',
           icon: FirebaseIcon,
         },
+        {
+          name: 'Vue-draggable',
+          icon: VuejsIcon,
+        },
       ],
     };
   },
@@ -74,7 +100,7 @@ export default {
       let techs = [];
       switch (this.showTech) {
         case 1:
-          techs = this.allTech.filter((item) => ['Vue', 'Vuex'].includes(item.name));
+          techs = this.allTech.filter((item) => ['Vue', 'Vuex', 'Vue-draggable'].includes(item.name));
           break;
 
         case 2:
@@ -214,6 +240,7 @@ export default {
   .demo-item-wrapper {
     transition: all 0.2s ease-in-out;
     padding-bottom: 0px;
+    text-decoration: none !important;
   }
 
   .demo-item-wrapper:hover {
@@ -242,6 +269,7 @@ export default {
     margin: 0px 10px;
     transition: all 0.2s;
     cursor: pointer;
+    color: #191919;
   }
 
   .demo-item-show {
