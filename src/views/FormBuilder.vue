@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <AddFieldModal v-model="addFieldModalShowing"/>
+    <AddFieldModal @create="updateField" v-model="addFieldModalShowing" :data="addFieldModalData"/>
 
     <div class="content-wrapper">
       <router-link class="back-button" :to="{ name: 'Home' }" >
@@ -21,9 +21,9 @@
               :key="index"
               class="build-option"
               v-for="(element, index) in buildOptions"
-              :type="element.name"
+              :type="element.type"
             >
-              {{element.name}}
+              {{element.type}}
             </div>
           </draggable>
         </div>
@@ -75,26 +75,39 @@ export default {
   data() {
     return {
       addFieldModalShowing: false,
+      addFieldModalData: {},
       buildOptions: [{
-        name: 'Text',
+        type: 'Text',
+        name: 'Text field',
       }, {
-        name: 'Number',
+        type: 'Number',
+        name: 'Number field',
       }, {
-        name: 'Email',
+        type: 'Email',
+        name: 'Email field',
       }, {
-        name: 'URL',
+        type: 'URL',
+        name: 'URL field',
       }, {
-        name: 'Checkbox',
+        type: 'Checkbox',
+        name: 'Checkbox field',
       }, {
-        name: 'Selection',
+        type: 'Selection',
+        name: 'Selection field',
       }],
       buildForm: [],
     };
   },
   methods: {
     openAddFieldModal(event) {
-      console.log(event.item.attributes.type.value);
       this.addFieldModalShowing = true;
+      this.addFieldModalData = { ...this.buildForm[event.newIndex], index: event.newIndex };
+    },
+    updateField(form) {
+      const { setIndex } = form;
+      // eslint-disable-next-line no-param-reassign
+      delete form.setIndex;
+      this.buildForm[setIndex] = form;
     },
   },
 };

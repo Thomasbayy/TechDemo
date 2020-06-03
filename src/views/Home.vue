@@ -10,32 +10,32 @@
     <div class="demo-box">
       <router-link
         class="demo-item-wrapper"
-        @mouseenter="showTech = 1"
-        @mouseleave="showTech = false"
+        @mouseenter.native="showTech = 1"
+        @mouseleave.native="showTech = false"
         :to="{ name: 'form-builder' }"
       >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[0] }">Form builder</div>
       </router-link>
       <router-link
         class="demo-item-wrapper"
-        @mouseenter="showTech = 2"
-        @mouseleave="showTech = false"
+        @mouseenter.native="showTech = 2"
+        @mouseleave.native="showTech = false"
         :to="{ name: 'form-builder' }"
       >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[1] }">Hey 2</div>
       </router-link>
       <router-link
         class="demo-item-wrapper"
-        @mouseenter="showTech = 3"
-        @mouseleave="showTech = false"
+        @mouseenter.native="showTech = 3"
+        @mouseleave.native="showTech = false"
         :to="{ name: 'form-builder' }"
       >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[2] }">Hey 3</div>
       </router-link>
       <router-link
         class="demo-item-wrapper"
-        @mouseenter="showTech = 4"
-        @mouseleave="showTech = false"
+        @mouseenter.native="showTech = 4"
+        @mouseleave.native="showTech = false"
         :to="{ name: 'form-builder' }"
       >
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[3] }">Hey 4</div>
