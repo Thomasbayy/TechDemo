@@ -1,6 +1,11 @@
 <template>
   <div class="wrapper">
-    <AddFieldModal @create="updateField" v-model="addFieldModalShowing" :data="addFieldModalData"/>
+    <FieldModal
+      @create="updateField"
+      @delete="deleteField"
+      v-model="addFieldModalShowing"
+      :data="addFieldModalData"
+    />
 
     <div class="content-wrapper">
       <router-link class="back-button" :to="{ name: 'Home' }" >
@@ -28,15 +33,16 @@
           </draggable>
         </div>
 
-        <div style="margin-right: 36px;">
+        <div style="margin-right: 24px;">
           <div>Drag fields to build</div>
           <draggable
             class="build-area"
             v-model="buildForm"
             group="people"
-            @add="openAddFieldModal"
+            @add="addNewField"
           >
             <div
+              @click="openFieldModal(element.id)"
               :key="index"
               class="build-option"
               v-for="(element, index) in buildForm"
@@ -48,11 +54,10 @@
 
         <div>
           <div>Form preview</div>
-          <div>
-            <div v-for="(item, index) in buildForm" :key="index">
-              <div>{{ item.label }}</div>
-              <input>
-            </div>
+          <div class="form-container">
+            <form style="width: 300px;">
+              <FormField v-for="field in buildForm" :field="field" :key="field.id"></FormField>
+            </form>
           </div>
         </div>
       </div>
@@ -63,14 +68,16 @@
 <script>
 
 import draggable from 'vuedraggable';
-import AddFieldModal from '@/components/form-builder/AddFieldModal.vue';
+import FieldModal from '@/components/form-builder/FieldModal.vue';
+import FormField from '@/components/form-builder/FormField.vue';
 import ArrowLeftIcon from 'vue-material-design-icons/ArrowLeft.vue';
 
 export default {
   components: {
     draggable,
-    AddFieldModal,
+    FieldModal,
     ArrowLeftIcon,
+    FormField,
   },
   data() {
     return {
@@ -99,15 +106,26 @@ export default {
     };
   },
   methods: {
-    openAddFieldModal(event) {
+    assignIdAndType(index, type) {
+      this.buildForm[index].id = Math.random().toString(36).substr(2, 9);
+      this.buildForm[index].type = type;
+    },
+    addNewField(event) {
+      this.assignIdAndType(event.newIndex, event.item.attributes.type.value);
+      this.openFieldModal(this.buildForm[event.newIndex].id);
+    },
+    openFieldModal(id) {
       this.addFieldModalShowing = true;
-      this.addFieldModalData = { ...this.buildForm[event.newIndex], index: event.newIndex };
+      const fieldIndex = this.buildForm.findIndex((field) => field.id === id);
+      this.addFieldModalData = this.buildForm[fieldIndex];
     },
     updateField(form) {
-      const { setIndex } = form;
-      // eslint-disable-next-line no-param-reassign
-      delete form.setIndex;
-      this.buildForm[setIndex] = form;
+      const fieldIndex = this.buildForm.findIndex((field) => field.id === form.id);
+      this.buildForm[fieldIndex] = form;
+    },
+    deleteField(id) {
+      const index = this.buildForm.findIndex((field) => field.id === id);
+      this.buildForm.splice(index, 1);
     },
   },
 };
@@ -177,5 +195,11 @@ export default {
     min-height: 100px;
     background-color: #dde9ff;
     padding: 6px 0px;
+  }
+
+  .form-container {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 24px;
   }
 </style>

@@ -9,31 +9,31 @@
 
       <div>
         <label>Required</label>
-        <input class="checkbox-field" type="checkbox" v-model="form.required">
+        <input class="checkbox-field" type="checkbox" v-model="form.validations.required">
       </div>
 
-      <div v-if="'minLength' in form">
+      <div v-if="'minLength' in form.validations">
         <label>Minimum length</label>
-        <input class="number-field" type="number" v-model="form.minLength">
+        <input class="number-field" type="number" v-model="form.validations.minLength">
       </div>
 
-      <div v-if="'maxLength' in form">
+      <div v-if="'maxLength' in form.validations">
         <label>Max length</label>
-        <input class="number-field" type="number" v-model="form.maxLength">
+        <input class="number-field" type="number" v-model="form.validations.maxLength">
       </div>
 
-      <div v-if="'minValue' in form">
+      <div v-if="'minValue' in form.validations">
         <label>Minimum value</label>
-        <input class="number-field" type="number" v-model="form.minValue">
+        <input class="number-field" type="number" v-model="form.validations.minValue">
       </div>
 
-      <div v-if="'maxValue' in form">
+      <div v-if="'maxValue' in form.validations">
         <label>Max value</label>
-        <input class="number-field" type="number" v-model="form.maxValue">
+        <input class="number-field" type="number" v-model="form.validations.maxValue">
       </div>
 
       <div class="submit-box">
-
+        <button @click="remove" class="delete-button">Delete</button>
         <button @click="close" class="cancel-button">Cancel</button>
         <button @click="submit" class="submit-button">Save</button>
       </div>
@@ -73,57 +73,58 @@ export default {
     },
   },
   methods: {
+    remove() {
+      this.$emit('delete', this.form.id);
+      this.close();
+    },
     close() {
       this.$emit('input', false);
     },
     submit() {
       if (this.form.name) {
-        this.$emit('create', { ...this.form, setIndex: this.data.index });
+        this.$emit('create', this.form);
         this.close();
       }
     },
     setForm() {
+      this.form = { ...this.data };
+      if (this.form.validations) return;
+
       switch (this.data.type) {
         default:
-          this.form = {};
+          this.form = this.data;
           break;
         case 'Text':
-          this.form = {
-            name: '',
+          this.form.validations = {
             required: false,
-            maxLength: 0,
-            minLength: 0,
+            maxLength: '0',
+            minLength: '0',
           };
           break;
         case 'Number':
-          this.form = {
-            name: '',
+          this.form.validations = {
             required: false,
-            maxValue: 0,
-            minValue: 0,
+            maxValue: '0',
+            minValue: '0',
           };
           break;
         case 'Email':
-          this.form = {
-            name: '',
+          this.form.validations = {
             required: false,
           };
           break;
         case 'URL':
-          this.form = {
-            name: '',
+          this.form.validations = {
             required: false,
           };
           break;
         case 'Checkbox':
-          this.form = {
-            name: '',
+          this.form.validations = {
             required: false,
           };
           break;
         case 'Selection':
-          this.form = {
-            name: '',
+          this.form.validations = {
             required: false,
             options: [],
           };
@@ -179,7 +180,7 @@ export default {
     justify-content: flex-end;
   }
 
-  .submit-button, .cancel-button {
+  .submit-button, .cancel-button, .delete-button {
     padding: 8px 16px;
     background-color: #41B883;
     color: #fff;
@@ -205,6 +206,15 @@ export default {
 
     &:hover {
       background-color: #bbb;
+    }
+  }
+
+  .delete-button {
+    margin-right: auto;
+    background-color: #ffa324;
+
+    &:hover {
+      background-color: #ff8732;
     }
   }
 
