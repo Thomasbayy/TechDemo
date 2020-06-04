@@ -6,12 +6,27 @@
     </label>
     <input
       v-if="isInput"
+      v-model="value"
       :type="field.type.toLowerCase()"
-      :maxlength="field.validations && field.validations.maxLength"
-      :max="field.validations && field.validations.maxValue"
+      :maxlength="field.validations
+      && field.validations.maxLength
+      && field.validations.maxLength > 0"
+      :max="field.validations
+      && field.validations.maxValue
+      && field.validations.maxValue > 0"
       :minlength="field.validations && field.validations.minLength"
       :min="field.validations && field.validations.minValue"
+      @input="applyValidations"
     >
+    <select
+      v-if="isSelect"
+    >
+      <option></option>
+      <option
+        v-for="(option, index) in field.validations.options"
+        :key="index"
+      >{{ option }}</option>
+    </select>
   </div>
 </template>
 
@@ -24,11 +39,30 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      value: '',
+    };
+  },
   computed: {
     isInput() {
       return this.field.type === 'Text' || this.field.type === 'Number'
         || this.field.type === 'Email' || this.field.type === 'URL'
         || this.field.type === 'Checkbox';
+    },
+    isSelect() {
+      return this.field.type === 'Selection';
+    },
+  },
+  methods: {
+    applyValidations() {
+      if (this.field.validations
+        && this.field.validations.maxValue
+        && this.field.validations.maxValue > 0) {
+        if (Number(this.value) > this.field.validations.maxValue) {
+          this.value = this.field.validations.maxValue;
+        }
+      }
     },
   },
 };
@@ -46,7 +80,7 @@ export default {
     margin-bottom: 4px;
   }
 
-  input {
+  input, select {
     width: 100%;
     padding: 6px;
     margin-bottom: 12px;

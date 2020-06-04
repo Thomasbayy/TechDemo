@@ -32,6 +32,24 @@
         <input class="number-field" type="number" v-model="form.validations.maxValue">
       </div>
 
+      <div v-if="'options' in form.validations">
+        <label>Options</label>
+        <div
+          v-for="(item, index) in form.validations.options"
+          :key="index"
+          class="option-box"
+        >
+          <input
+            class="option-input"
+            v-model="form.validations.options[index]"
+            type="text"
+          >
+          <div class="option-remove" @click="removeOption(index)">X</div>
+        </div>
+
+        <div class="add-option" @click="addOption">Add option</div>
+      </div>
+
       <div class="submit-box">
         <button @click="remove" class="delete-button">Delete</button>
         <button @click="close" class="cancel-button">Cancel</button>
@@ -86,6 +104,13 @@ export default {
         this.close();
       }
     },
+    addOption() {
+      const index = this.form.validations.options.length;
+      this.form.validations.options.push(`Option-${index}`);
+    },
+    removeOption(index) {
+      this.form.validations.options.splice(index, 1);
+    },
     setForm() {
       this.form = { ...this.data };
       if (this.form.validations) return;
@@ -124,10 +149,14 @@ export default {
           };
           break;
         case 'Selection':
-          this.form.validations = {
-            required: false,
-            options: [],
-          };
+          this.$set(
+            this.form,
+            'validations',
+            {
+              required: false,
+              options: [],
+            },
+          );
           break;
       }
     },
@@ -173,6 +202,46 @@ export default {
     height: 20px;
     width: 20px;
     padding: 4px;
+  }
+
+  .option-box {
+    display: flex;
+  }
+
+  .option-input {
+    flex: 1;
+    height: 30px;
+    margin-bottom: 4px;
+    padding: 0px 2px;
+    border: 1px solid #ccc;
+    margin-right: 2px;
+  }
+
+  .option-remove {
+    width: 30px;
+    height: 30px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .add-option {
+    width: 100%;
+    height: 36px;
+    border: 1px dashed black;
+    line-height: 36px;
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #f4f4f4;
+    }
   }
 
   .submit-box {
