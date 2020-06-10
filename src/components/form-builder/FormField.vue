@@ -19,7 +19,7 @@
       @input="applyValidations"
     >
     <select
-      v-if="isSelect"
+      v-if="isSelect && field.validations && field.validations.options"
     >
       <option></option>
       <option

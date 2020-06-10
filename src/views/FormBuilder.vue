@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div>
     <FieldModal
       @create="updateField"
       @delete="deleteField"
@@ -7,12 +7,7 @@
       :data="addFieldModalData"
     />
 
-    <div class="content-wrapper">
-      <router-link class="back-button" :to="{ name: 'Home' }" >
-        <arrow-left-icon :size="16"/> Back
-      </router-link>
       <h2>Form builder</h2>
-
       <div class="build-wrapper">
         <div style="margin-right: 24px;">
           <div>Available fields</div>
@@ -50,18 +45,30 @@
               {{element.name}}
             </div>
           </draggable>
+          <div class="form-store-options">
+            <button
+              :disabled="!storeForm.length"
+              class="form-store-load"
+              @click="loadForm"
+            >Load</button>
+            <button class="form-store-clear" @click="clearForm">Clear</button>
+            <button class="form-store-save" @click="saveForm">Save</button>
+          </div>
         </div>
 
         <div>
           <div>Form preview</div>
           <div class="form-container">
             <form style="width: 300px;">
-              <FormField v-for="field in buildForm" :field="field" :key="field.id"></FormField>
+              <FormField
+                v-for="(field, index) in buildForm"
+                :field="field"
+                :key="index"
+              ></FormField>
             </form>
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -70,13 +77,12 @@
 import draggable from 'vuedraggable';
 import FieldModal from '@/components/form-builder/FieldModal.vue';
 import FormField from '@/components/form-builder/FormField.vue';
-import ArrowLeftIcon from 'vue-material-design-icons/ArrowLeft.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     draggable,
     FieldModal,
-    ArrowLeftIcon,
     FormField,
   },
   data() {
@@ -105,7 +111,21 @@ export default {
       buildForm: [],
     };
   },
+  computed: {
+    ...mapGetters({
+      storeForm: 'formBuilder/getForm',
+    }),
+  },
   methods: {
+    loadForm() {
+      this.buildForm = this.storeForm;
+    },
+    saveForm() {
+      this.$store.commit('formBuilder/setForm', this.buildForm);
+    },
+    clearForm() {
+      this.buildForm = [];
+    },
     assignIdAndType(index, type) {
       this.buildForm[index].id = Math.random().toString(36).substr(2, 9);
       this.buildForm[index].type = type;
@@ -132,38 +152,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .wrapper {
-    overflow: auto;
-  }
-
-  .back-button {
-    text-decoration: none !important;
-    color: #41B883;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
-    box-sizing: border-box;
-    padding: 6px 12px;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    font-size: 14px;
-
-    &:hover {
-      border: 1px solid rgba(65, 184, 131, 0.6);
-    }
-
-    span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 6px;
-    }
-  }
-
-  .content-wrapper {
-    padding: 12px 36px 36px 36px;
-  }
 
   .build-wrapper {
     display: flex;
@@ -201,5 +189,14 @@ export default {
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 24px;
+  }
+
+  .form-store-options {
+    display: flex;
+  }
+
+  .form-store-load, .form-store-save, .form-store-clear {
+    flex: 1;
+    height: 30px;
   }
 </style>

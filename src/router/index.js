@@ -11,10 +11,17 @@ const routes = [
     component: Home,
   },
   {
-    path: '/form-builder',
-    name: 'form-builder',
-    component: () => import('@/views/FormBuilder.vue'),
+    path: 'layout-subpage',
+    component: () => import('@/layouts/layout-subpage.vue'),
+    children: [
+      {
+        path: '/form-builder',
+        name: 'form-builder',
+        component: () => import('@/views/FormBuilder.vue'),
+      },
+    ],
   },
+
 ];
 
 const router = new VueRouter({
