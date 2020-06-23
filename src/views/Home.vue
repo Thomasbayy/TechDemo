@@ -20,11 +20,12 @@
         class="demo-item-wrapper"
         @mouseenter.native="showTech = 2"
         @mouseleave.native="showTech = false"
-        :to="{ name: 'form-builder' }"
+        :to="{ name: 'websocket' }"
       >
-        <div class="demo-item" :class="{ 'demo-item-show': showDemo[1] }">Hey 2</div>
+        <div class="demo-item" :class="{ 'demo-item-show': showDemo[1] }">Websocket</div>
       </router-link>
       <router-link
+        v-if="1<1"
         class="demo-item-wrapper"
         @mouseenter.native="showTech = 3"
         @mouseleave.native="showTech = false"
@@ -33,6 +34,7 @@
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[2] }">Hey 3</div>
       </router-link>
       <router-link
+        v-if="1<1"
         class="demo-item-wrapper"
         @mouseenter.native="showTech = 4"
         @mouseleave.native="showTech = false"
@@ -58,6 +60,7 @@
 import VuejsIcon from 'vue-material-design-icons/Vuejs.vue';
 import FirebaseIcon from 'vue-material-design-icons/Firebase.vue';
 import GithubIcon from 'vue-material-design-icons/Github.vue';
+import JSIcon from 'vue-material-design-icons/LanguageJavascript.vue';
 
 // components
 import BuiltWithModal from '@/components/BuiltWithModal.vue';
@@ -92,6 +95,10 @@ export default {
           name: 'Vue-draggable',
           icon: VuejsIcon,
         },
+        {
+          name: 'Websocket',
+          icon: JSIcon,
+        },
       ],
     };
   },
@@ -104,7 +111,7 @@ export default {
           break;
 
         case 2:
-          techs = this.allTech.filter((item) => ['Vue', 'Vuex', 'Firebase'].includes(item.name));
+          techs = this.allTech.filter((item) => ['Websocket'].includes(item.name));
           break;
 
         case 3:

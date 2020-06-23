@@ -19,6 +19,11 @@ const routes = [
         name: 'form-builder',
         component: () => import('@/views/FormBuilder.vue'),
       },
+      {
+        path: '/websocket',
+        name: 'websocket',
+        component: () => import('@/views/Websocket.vue'),
+      },
     ],
   },
 
