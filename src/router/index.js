@@ -11,7 +11,7 @@ const routes = [
     component: Home,
   },
   {
-    path: 'layout-subpage',
+    path: '/layout-subpage',
     component: () => import('@/layouts/layout-subpage.vue'),
     children: [
       {
@@ -23,6 +23,11 @@ const routes = [
         path: '/websocket',
         name: 'websocket',
         component: () => import('@/views/Websocket.vue'),
+      },
+      {
+        path: '/hablab',
+        name: 'hablab',
+        component: () => import('@/views/Hablab.vue'),
       },
     ],
   },

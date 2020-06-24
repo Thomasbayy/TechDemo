@@ -25,13 +25,12 @@
         <div class="demo-item" :class="{ 'demo-item-show': showDemo[1] }">Websocket</div>
       </router-link>
       <router-link
-        v-if="1<1"
         class="demo-item-wrapper"
         @mouseenter.native="showTech = 3"
         @mouseleave.native="showTech = false"
-        :to="{ name: 'form-builder' }"
+        :to="{ name: 'hablab' }"
       >
-        <div class="demo-item" :class="{ 'demo-item-show': showDemo[2] }">Hey 3</div>
+        <div class="demo-item" :class="{ 'demo-item-show': showDemo[2] }">Hablab WS</div>
       </router-link>
       <router-link
         v-if="1<1"
@@ -115,7 +114,7 @@ export default {
           break;
 
         case 3:
-          techs = this.allTech.filter((item) => ['Vue', 'Firebase'].includes(item.name));
+          techs = this.allTech.filter((item) => ['Websocket'].includes(item.name));
           break;
 
         case 4:
